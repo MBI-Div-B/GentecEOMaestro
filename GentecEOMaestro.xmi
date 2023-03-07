@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
+  <classes name="GentecEOMaestro" pogoRevision="9.6">
+    <description description="" title="device Server for a Gentec EO Maestro Powermeter" sourcePath="D:\tangoDS\Gentec" language="PythonHL" filestogenerate="XMI   file,Code files,Python Package,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+      <inheritances classname="Device_Impl" sourcePath=""/>
+      <identification contact="at mbi-berlin.de - Leon.Werner" author="Leon.Werner" emailDomain="mbi-berlin.de" classFamily="MeasureInstruments" siteSpecific="" platform="All Platforms" bus="USB" manufacturer="none" reference=""/>
+    </description>
+    <deviceProperties name="Port" description="Serial port name">
+      <type xsi:type="pogoDsl:StringType"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </deviceProperties>
+    <commands name="State" description="This command gets the device state (stored in its device_state data member) and returns it to the caller." execMethod="dev_state" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device state">
+        <type xsi:type="pogoDsl:StateType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <commands name="Status" description="This command gets the device status (stored in its device_status data member) and returns it to the caller." execMethod="dev_status" displayLevel="OPERATOR" polledPeriod="0">
+      <argin description="none">
+        <type xsi:type="pogoDsl:VoidType"/>
+      </argin>
+      <argout description="Device status">
+        <type xsi:type="pogoDsl:ConstStringType"/>
+      </argout>
+      <status abstract="true" inherited="true" concrete="true"/>
+    </commands>
+    <attributes name="range" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:EnumType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="Range" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <enumLabels>00 1 picowatt or picojoule</enumLabels>
+      <enumLabels>01 3 picowatts or picojoules</enumLabels>
+      <enumLabels>02 10 picowatts or picojoules</enumLabels>
+      <enumLabels>03 30 picowatts or picojoules</enumLabels>
+      <enumLabels>04 100 picowatts or picojoules</enumLabels>
+      <enumLabels>05 300 picowatts or picojoules</enumLabels>
+      <enumLabels>06 1 nanowatt or nanojoule</enumLabels>
+      <enumLabels>07 3 nanowatts or nanojoules</enumLabels>
+      <enumLabels>08 10 nanowatts or nanojoules</enumLabels>
+      <enumLabels>09 30 nanowatts or nanojoules</enumLabels>
+      <enumLabels>10 100 nanowatts or nanojoules</enumLabels>
+      <enumLabels>11 300 nanowatts or nanojoules</enumLabels>
+      <enumLabels>12 1 microwatt or microjoule</enumLabels>
+      <enumLabels>13 3 microwatts or microjoules</enumLabels>
+      <enumLabels>14 10 microwatts or microjoules</enumLabels>
+      <enumLabels>15 30 microwatts or microjoules</enumLabels>
+      <enumLabels>16 100 microwatts or microjoules</enumLabels>
+      <enumLabels>17 300 microwatts or microjoules</enumLabels>
+      <enumLabels>18 1 milliwatt or millijoule</enumLabels>
+      <enumLabels>19 3 milliwatts or millijoules</enumLabels>
+      <enumLabels>20 10 milliwatts or millijoules</enumLabels>
+      <enumLabels>21 30 milliwatts or millijoules</enumLabels>
+      <enumLabels>22 100 milliwatts or millijoules</enumLabels>
+      <enumLabels>23 300 milliwatts or millijoules</enumLabels>
+      <enumLabels>24 1 Watt or Joule</enumLabels>
+      <enumLabels>25 3 watts or joules</enumLabels>
+      <enumLabels>26 10 watts or joules</enumLabels>
+      <enumLabels>27 30 watts or joules</enumLabels>
+      <enumLabels>28 100 watts or joules</enumLabels>
+      <enumLabels>29 300 watts or joules</enumLabels>
+      <enumLabels>30 1 kilowatt or kilojoule</enumLabels>
+      <enumLabels>31 3 kilowatts or kilojoules</enumLabels>
+      <enumLabels>32 10 kilowatts or kilojoules</enumLabels>
+      <enumLabels>33 30 kilowatts or kilojoules</enumLabels>
+      <enumLabels>34 100 kilowatts or kilojoules</enumLabels>
+      <enumLabels>35 300 kilowatts or kilojoules</enumLabels>
+      <enumLabels>36 1 megawatt or megajoule</enumLabels>
+      <enumLabels>37 3 megawatts or megajoules</enumLabels>
+      <enumLabels>38 10 megawatts or megajoules</enumLabels>
+      <enumLabels>39 30 megawatts or megajoules</enumLabels>
+      <enumLabels>40 100 megawatts or megajoules</enumLabels>
+      <enumLabels>41 300 megawatts or megajoules</enumLabels>
+    </attributes>
+    <attributes name="auto_range" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="Auto Range" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="trigger_level" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="Trigger Level" unit="%" standardUnit="" displayUnit="" format="%4.2f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="wave_corr" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:BooleanType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="Wavelenth correction" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="wave_corr_value" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:DoubleType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="This command is used to specify the wavelength in nm being used on the detector. The &#xA;EEPROM in the detector contains measured spectral data for a wide range of wavelengths. If the &#xA;wavelength input by the user is different from the predefined list of wavelengths on the device, a &#xA;custom value is interpolated. Specifying zero as a wavelength or providing an out-of-bound value &#xA;as a parameter restores the default settings." label="Value for wavelenth correction" unit="nm" standardUnit="" displayUnit="" format="%5.0f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <attributes name="meter_value" attType="Scalar" rwType="READ" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
+      <dataType xsi:type="pogoDsl:FloatType"/>
+      <changeEvent fire="false" libCheckCriteria="false"/>
+      <archiveEvent fire="false" libCheckCriteria="false"/>
+      <dataReadyEvent fire="false" libCheckCriteria="true"/>
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+      <properties description="" label="Measurement Value" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+    </attributes>
+    <states name="ON" description="">
+      <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
+    </states>
+    <preferences docHome="./doc_html" makefileHome="$(TANGO_HOME)"/>
+  </classes>
+</pogoDsl:PogoSystem>

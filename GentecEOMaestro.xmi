@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <pogoDsl:PogoSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pogoDsl="http://www.esrf.fr/tango/pogo/PogoDsl">
   <classes name="GentecEOMaestro" pogoRevision="9.6">
-    <description description="" title="device Server for a Gentec EO Maestro Powermeter" sourcePath="D:\tangoDS\Gentec" language="PythonHL" filestogenerate="XMI   file,Code files,Python Package,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
+    <description description="" title="device Server for a Gentec EO Maestro Powermeter" sourcePath="D:\tangoDS\Gentec" language="PythonHL" filestogenerate="XMI   file,Code files,Protected Regions" license="GPL" copyright="" hasMandatoryProperty="false" hasConcreteProperty="true" hasAbstractCommand="false" hasAbstractAttribute="false">
       <inheritances classname="Device_Impl" sourcePath=""/>
       <identification contact="at mbi-berlin.de - Leon.Werner" author="Leon.Werner" emailDomain="mbi-berlin.de" classFamily="MeasureInstruments" siteSpecific="" platform="All Platforms" bus="USB" manufacturer="none" reference=""/>
     </description>
@@ -34,48 +34,48 @@
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
       <properties description="" label="Range" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
-      <enumLabels>00 1 picowatt or picojoule</enumLabels>
-      <enumLabels>01 3 picowatts or picojoules</enumLabels>
-      <enumLabels>02 10 picowatts or picojoules</enumLabels>
-      <enumLabels>03 30 picowatts or picojoules</enumLabels>
-      <enumLabels>04 100 picowatts or picojoules</enumLabels>
-      <enumLabels>05 300 picowatts or picojoules</enumLabels>
-      <enumLabels>06 1 nanowatt or nanojoule</enumLabels>
-      <enumLabels>07 3 nanowatts or nanojoules</enumLabels>
-      <enumLabels>08 10 nanowatts or nanojoules</enumLabels>
-      <enumLabels>09 30 nanowatts or nanojoules</enumLabels>
-      <enumLabels>10 100 nanowatts or nanojoules</enumLabels>
-      <enumLabels>11 300 nanowatts or nanojoules</enumLabels>
-      <enumLabels>12 1 microwatt or microjoule</enumLabels>
-      <enumLabels>13 3 microwatts or microjoules</enumLabels>
-      <enumLabels>14 10 microwatts or microjoules</enumLabels>
-      <enumLabels>15 30 microwatts or microjoules</enumLabels>
-      <enumLabels>16 100 microwatts or microjoules</enumLabels>
-      <enumLabels>17 300 microwatts or microjoules</enumLabels>
-      <enumLabels>18 1 milliwatt or millijoule</enumLabels>
-      <enumLabels>19 3 milliwatts or millijoules</enumLabels>
-      <enumLabels>20 10 milliwatts or millijoules</enumLabels>
-      <enumLabels>21 30 milliwatts or millijoules</enumLabels>
-      <enumLabels>22 100 milliwatts or millijoules</enumLabels>
-      <enumLabels>23 300 milliwatts or millijoules</enumLabels>
-      <enumLabels>24 1 Watt or Joule</enumLabels>
-      <enumLabels>25 3 watts or joules</enumLabels>
-      <enumLabels>26 10 watts or joules</enumLabels>
-      <enumLabels>27 30 watts or joules</enumLabels>
-      <enumLabels>28 100 watts or joules</enumLabels>
-      <enumLabels>29 300 watts or joules</enumLabels>
-      <enumLabels>30 1 kilowatt or kilojoule</enumLabels>
-      <enumLabels>31 3 kilowatts or kilojoules</enumLabels>
-      <enumLabels>32 10 kilowatts or kilojoules</enumLabels>
-      <enumLabels>33 30 kilowatts or kilojoules</enumLabels>
-      <enumLabels>34 100 kilowatts or kilojoules</enumLabels>
-      <enumLabels>35 300 kilowatts or kilojoules</enumLabels>
-      <enumLabels>36 1 megawatt or megajoule</enumLabels>
-      <enumLabels>37 3 megawatts or megajoules</enumLabels>
-      <enumLabels>38 10 megawatts or megajoules</enumLabels>
-      <enumLabels>39 30 megawatts or megajoules</enumLabels>
-      <enumLabels>40 100 megawatts or megajoules</enumLabels>
-      <enumLabels>41 300 megawatts or megajoules</enumLabels>
+      <enumLabels>1 picowatt or picojoule</enumLabels>
+      <enumLabels>3 picowatts or picojoules</enumLabels>
+      <enumLabels>10 picowatts or picojoules</enumLabels>
+      <enumLabels>30 picowatts or picojoules</enumLabels>
+      <enumLabels>100 picowatts or picojoules</enumLabels>
+      <enumLabels>300 picowatts or picojoules</enumLabels>
+      <enumLabels>1 nanowatt or nanojoule</enumLabels>
+      <enumLabels>3 nanowatts or nanojoules</enumLabels>
+      <enumLabels>10 nanowatts or nanojoules</enumLabels>
+      <enumLabels>30 nanowatts or nanojoules</enumLabels>
+      <enumLabels>100 nanowatts or nanojoules</enumLabels>
+      <enumLabels>300 nanowatts or nanojoules</enumLabels>
+      <enumLabels>1 microwatt or microjoule</enumLabels>
+      <enumLabels>3 microwatts or microjoules</enumLabels>
+      <enumLabels>10 microwatts or microjoules</enumLabels>
+      <enumLabels>30 microwatts or microjoules</enumLabels>
+      <enumLabels>100 microwatts or microjoules</enumLabels>
+      <enumLabels>300 microwatts or microjoules</enumLabels>
+      <enumLabels>1 milliwatt or millijoule</enumLabels>
+      <enumLabels>3 milliwatts or millijoules</enumLabels>
+      <enumLabels>10 milliwatts or millijoules</enumLabels>
+      <enumLabels>30 milliwatts or millijoules</enumLabels>
+      <enumLabels>100 milliwatts or millijoules</enumLabels>
+      <enumLabels>300 milliwatts or millijoules</enumLabels>
+      <enumLabels>1 Watt or Joule</enumLabels>
+      <enumLabels>3 watts or joules</enumLabels>
+      <enumLabels>10 watts or joules</enumLabels>
+      <enumLabels>30 watts or joules</enumLabels>
+      <enumLabels>100 watts or joules</enumLabels>
+      <enumLabels>300 watts or joules</enumLabels>
+      <enumLabels>1 kilowatt or kilojoule</enumLabels>
+      <enumLabels>3 kilowatts or kilojoules</enumLabels>
+      <enumLabels>10 kilowatts or kilojoules</enumLabels>
+      <enumLabels>30 kilowatts or kilojoules</enumLabels>
+      <enumLabels>100 kilowatts or kilojoules</enumLabels>
+      <enumLabels>300 kilowatts or kilojoules</enumLabels>
+      <enumLabels>1 megawatt or megajoule</enumLabels>
+      <enumLabels>3 megawatts or megajoules</enumLabels>
+      <enumLabels>10 megawatts or megajoules</enumLabels>
+      <enumLabels>30 megawatts or megajoules</enumLabels>
+      <enumLabels>100 megawatts or megajoules</enumLabels>
+      <enumLabels>300 megawatts or megajoules</enumLabels>
     </attributes>
     <attributes name="auto_range" attType="Scalar" rwType="READ_WRITE" displayLevel="OPERATOR" polledPeriod="0" maxX="" maxY="" allocReadMember="true" isDynamic="false">
       <dataType xsi:type="pogoDsl:BooleanType"/>
@@ -115,7 +115,7 @@
       <archiveEvent fire="false" libCheckCriteria="false"/>
       <dataReadyEvent fire="false" libCheckCriteria="true"/>
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>
-      <properties description="" label="Measurement Value" unit="" standardUnit="" displayUnit="" format="" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
+      <properties description="" label="Measurement Value" unit="W" standardUnit="" displayUnit="" format="%6.4f" maxValue="" minValue="" maxAlarm="" minAlarm="" maxWarning="" minWarning="" deltaTime="" deltaValue=""/>
     </attributes>
     <states name="ON" description="">
       <status abstract="false" inherited="false" concrete="true" concreteHere="true"/>

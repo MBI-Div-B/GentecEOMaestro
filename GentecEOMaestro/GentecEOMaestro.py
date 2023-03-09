@@ -32,48 +32,48 @@ __all__ = ["GentecEOMaestro", "main"]
 Range = enum.IntEnum(
     value="Range",
     names=[
-        ("00 1 picowatt or picojoule", 0),
-        ("01 3 picowatts or picojoules", 1),
-        ("02 10 picowatts or picojoules", 2),
-        ("03 30 picowatts or picojoules", 3),
-        ("04 100 picowatts or picojoules", 4),
-        ("05 300 picowatts or picojoules", 5),
-        ("06 1 nanowatt or nanojoule", 6),
-        ("07 3 nanowatts or nanojoules", 7),
-        ("08 10 nanowatts or nanojoules", 8),
-        ("09 30 nanowatts or nanojoules", 9),
-        ("10 100 nanowatts or nanojoules", 10),
-        ("11 300 nanowatts or nanojoules", 11),
-        ("12 1 microwatt or microjoule", 12),
-        ("13 3 microwatts or microjoules", 13),
-        ("14 10 microwatts or microjoules", 14),
-        ("15 30 microwatts or microjoules", 15),
-        ("16 100 microwatts or microjoules", 16),
-        ("17 300 microwatts or microjoules", 17),
-        ("18 1 milliwatt or millijoule", 18),
-        ("19 3 milliwatts or millijoules", 19),
-        ("20 10 milliwatts or millijoules", 20),
-        ("21 30 milliwatts or millijoules", 21),
-        ("22 100 milliwatts or millijoules", 22),
-        ("23 300 milliwatts or millijoules", 23),
-        ("24 1 Watt or Joule", 24),
-        ("25 3 watts or joules", 25),
-        ("26 10 watts or joules", 26),
-        ("27 30 watts or joules", 27),
-        ("28 100 watts or joules", 28),
-        ("29 300 watts or joules", 29),
-        ("30 1 kilowatt or kilojoule", 30),
-        ("31 3 kilowatts or kilojoules", 31),
-        ("32 10 kilowatts or kilojoules", 32),
-        ("33 30 kilowatts or kilojoules", 33),
-        ("34 100 kilowatts or kilojoules", 34),
-        ("35 300 kilowatts or kilojoules", 35),
-        ("36 1 megawatt or megajoule", 36),
-        ("37 3 megawatts or megajoules", 37),
-        ("38 10 megawatts or megajoules", 38),
-        ("39 30 megawatts or megajoules", 39),
-        ("40 100 megawatts or megajoules", 40),
-        ("41 300 megawatts or megajoules", 41),
+        ("1 picowatt or picojoule", 0),
+        ("3 picowatts or picojoules", 1),
+        ("10 picowatts or picojoules", 2),
+        ("30 picowatts or picojoules", 3),
+        ("100 picowatts or picojoules", 4),
+        ("300 picowatts or picojoules", 5),
+        ("1 nanowatt or nanojoule", 6),
+        ("3 nanowatts or nanojoules", 7),
+        ("10 nanowatts or nanojoules", 8),
+        ("30 nanowatts or nanojoules", 9),
+        ("100 nanowatts or nanojoules", 10),
+        ("300 nanowatts or nanojoules", 11),
+        ("1 microwatt or microjoule", 12),
+        ("3 microwatts or microjoules", 13),
+        ("10 microwatts or microjoules", 14),
+        ("30 microwatts or microjoules", 15),
+        ("100 microwatts or microjoules", 16),
+        ("300 microwatts or microjoules", 17),
+        ("1 milliwatt or millijoule", 18),
+        ("3 milliwatts or millijoules", 19),
+        ("10 milliwatts or millijoules", 20),
+        ("30 milliwatts or millijoules", 21),
+        ("100 milliwatts or millijoules", 22),
+        ("300 milliwatts or millijoules", 23),
+        ("1 Watt or Joule", 24),
+        ("3 watts or joules", 25),
+        ("10 watts or joules", 26),
+        ("30 watts or joules", 27),
+        ("100 watts or joules", 28),
+        ("300 watts or joules", 29),
+        ("1 kilowatt or kilojoule", 30),
+        ("3 kilowatts or kilojoules", 31),
+        ("10 kilowatts or kilojoules", 32),
+        ("30 kilowatts or kilojoules", 33),
+        ("100 kilowatts or kilojoules", 34),
+        ("300 kilowatts or kilojoules", 35),
+        ("1 megawatt or megajoule", 36),
+        ("3 megawatts or megajoules", 37),
+        ("10 megawatts or megajoules", 38),
+        ("30 megawatts or megajoules", 39),
+        ("100 megawatts or megajoules", 40),
+        ("300 megawatts or megajoules", 41),
     ]
 )
 """Python enumerated type for Range attribute."""
@@ -148,6 +148,7 @@ class GentecEOMaestro(Device):
     meter_value = attribute(
         dtype='DevFloat',
         label="Measurement Value",
+        format="%6.4f",
     )
 
     # ---------------
@@ -158,17 +159,21 @@ class GentecEOMaestro(Device):
         """Initialises the attributes and properties of the GentecEOMaestro."""
         Device.init_device(self)
         # PROTECTED REGION ID(GentecEOMaestro.init_device) ENABLED START #
+        self.set_state(DevState.INIT)
         self._range = Range["06 1 nanowatt or nanojoule"]
         self._auto_range = False
         self._trigger_level = 0.0
         self._wave_corr = False
         self._wave_corr_value = 0.0
         self._meter_value = 0.0
-
         self.pm = serial.Serial(self.Port,baudrate=115200, bytesize=8,  stopbits=1, timeout=1)
         self.pm.write(b"*VER")
-        self.debug_stream(self.pm.readline())
+        self.debug_stream(self.pm.read())
+        #self.debug_stream(self.pm.readline())
+        self.debug_stream('comand send')
         self.pm.write(b'*PWC00000')
+        self.set_state(DevState.ON)
+        self.debug_stream('init done')
         # PROTECTED REGION END #    //  GentecEOMaestro.init_devicey
 
     def always_executed_hook(self):

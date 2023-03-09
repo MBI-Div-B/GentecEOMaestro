@@ -5,9 +5,6 @@
 - pySerial
 - PyTango >= 8.1.6
 
-## Installation
-
-
 
 ## Usage
 

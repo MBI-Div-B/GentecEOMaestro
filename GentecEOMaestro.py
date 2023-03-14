@@ -24,12 +24,11 @@ import enum
 # Additional import
 # PROTECTED REGION ID(GentecEOMaestro.additionnal_import) ENABLED START #
 import serial
-import time
 unit_lib = {
-    b'0':'W',
-    b'1':'J',
-    b'2':'J (singe shot)',
-    b'6':'dBm'
+    b'0': 'W',
+    b'1': 'J',
+    b'2': 'J (singe shot)',
+    b'6': 'dBm'
 }
 # PROTECTED REGION END #    //  GentecEOMaestro.additionnal_import
 
@@ -97,15 +96,12 @@ class GentecEOMaestro(Device):
             - Type:'DevString'
     """
     # PROTECTED REGION ID(GentecEOMaestro.class_variable) ENABLED START #
-
-
-
-    def send_query(self,cmd):
+    def send_query(self, cmd):
         self.debug_stream('in querry')
         self.debug_stream(cmd)
-        self.pm.read(self.pm.in_waiting) #deleting all old data in que
+        self.pm.read(self.pm.in_waiting)  # deleting all old data in que
         self.pm.write(str(cmd).encode())
-        output = self.pm.readline().replace(b'\r\n',b'')
+        output = self.pm.readline().replace(b'\r\n', b'')
 
         self.debug_stream(output)
         self.debug_stream('out querry')
@@ -181,10 +177,13 @@ class GentecEOMaestro(Device):
         self._wave_corr = False
         self._wave_corr_value = 0.0
         self._meter_value = 0.0
-        self.pm = serial.Serial(self.Port,baudrate=115200, bytesize=8,  stopbits=1, timeout=0.1)
+        self.pm = serial.Serial(self.Port,
+                                baudrate=115200,
+                                bytesize=8,
+                                stopbits=1,
+                                timeout=0.1)
         self.pm.write(b"*VER")
         self.debug_stream(self.pm.read(20))
-        #self.debug_stream(self.pm.readline())
         self.pm.write(b'*PWC00000')
         self.set_state(DevState.ON)
         # PROTECTED REGION END #    //  GentecEOMaestro.init_devicey
@@ -212,7 +211,7 @@ class GentecEOMaestro(Device):
         # PROTECTED REGION ID(GentecEOMaestro.range_read) ENABLED START #
         """Return the range attribute."""
         self.debug_stream('in RANGE')
-        a = self.send_query('*GCR').replace(b'Range: ',b'')
+        a = self.send_query('*GCR').replace(b'Range: ', b'')
         self.debug_stream(a)
         self._range = Range(int(a))
         self.debug_stream(str(self._range))
@@ -223,7 +222,7 @@ class GentecEOMaestro(Device):
         # PROTECTED REGION ID(GentecEOMaestro.range_write) ENABLED START #
         """Set the range attribute."""
         temp = str(value).encode()
-        if int(value)<10:
+        if int(value) < 10:
             temp += b'0'
         self.pm.write(b'*SCS'+temp)
         # PROTECTED REGION END #    //  GentecEOMaestro.range_write
@@ -236,14 +235,13 @@ class GentecEOMaestro(Device):
 
     def write_auto_range(self, value):
         # PROTECTED REGION ID(GentecEOMaestro.auto_range_write) ENABLED START #
-        
         self.pm.write(b'*SAS'+str(int(value)).encode())
         # PROTECTED REGION END #    //  GentecEOMaestro.auto_range_write
 
     def read_trigger_level(self):
         # PROTECTED REGION ID(GentecEOMaestro.trigger_level_read) ENABLED START #
         """Return the trigger_level attribute."""
-        return float(self.send_query(b'*GTL').replace(b'Trigger Level: ',b''))
+        return float(self.send_query(b'*GTL').replace(b'Trigger Level: ', b''))
         # PROTECTED REGION END #    //  GentecEOMaestro.trigger_level_read
 
     def write_trigger_level(self, value):
@@ -269,7 +267,7 @@ class GentecEOMaestro(Device):
     def read_wave_corr_value(self):
         # PROTECTED REGION ID(GentecEOMaestro.wave_corr_value_read) ENABLED START #
         """Return the wave_corr_value attribute."""
-        return int(self.send_query(b'*GWL').replace(b'PWC:',b''))
+        return int(self.send_query(b'*GWL').replace(b'PWC:', b''))
         # PROTECTED REGION END #    //  GentecEOMaestro.wave_corr_value_read
 
     def write_wave_corr_value(self, value):

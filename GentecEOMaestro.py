@@ -1,3 +1,4 @@
+#!/usr/bin/python3 -u
 # -*- coding: utf-8 -*-
 #
 # This file is part of the GentecEOMaestro project
@@ -97,11 +98,15 @@ class GentecEOMaestro(Device):
     """
     # PROTECTED REGION ID(GentecEOMaestro.class_variable) ENABLED START #
     def send_query(self, cmd):
-        self.debug_stream('in querry')
+        self.debug_stream('in query')
         self.debug_stream(cmd)
-        self.pm.read(self.pm.in_waiting)  # deleting all old data in que
-        self.pm.write(str(cmd).encode())
-        output = self.pm.readline().replace(b'\r\n', b'')
+        # self.write(self.pm.in_waiting)  # deleting all old data in que
+        self.write(str(cmd))
+        res = self.read().decode('utf8').strip()
+        if res.find(':') == -1:
+            output = res
+        else:
+            output = res.split(':')[1]
 
         self.debug_stream(output)
         self.debug_stream('out querry')
@@ -113,8 +118,35 @@ class GentecEOMaestro(Device):
     # Device Properties
     # -----------------
 
-    Port = device_property(
-        dtype='DevString',
+
+    ConnectType = device_property(
+        dtype="str",
+        default_value="serial",
+        doc="either `net` or `serial`"
+    )
+
+    SerialPort = device_property(
+        dtype="str",
+        default_value="/dev/ttyUSB0",
+        doc="Serial port of device",
+    )
+
+    Baudrate = device_property(
+        dtype="int",
+        default_value=115200,
+        doc="Baudrate of serial port",
+    )
+
+    HostName = device_property(
+        dtype="str",
+        default_value="device.domain",
+        doc="Hostname / IP address of device",
+    )
+
+    PortNumber = device_property(
+        dtype="int",
+        default_value=20,
+        doc="Socket port number of device",
     )
 
     # ----------
@@ -177,16 +209,37 @@ class GentecEOMaestro(Device):
         self._wave_corr = False
         self._wave_corr_value = 0.0
         self._meter_value = 0.0
-        self.pm = serial.Serial(self.Port,
-                                baudrate=115200,
-                                bytesize=8,
-                                stopbits=1,
-                                timeout=0.1)
-        self.pm.write(b"*VER")
-        self.debug_stream(self.pm.read(20))
-        self.pm.write(b'*PWC00000')
+
+        if self.ConnectType == "net":
+            import socket
+            self.pm = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.pm.connect((self.HostName, self.PortNumber))
+        elif self.ConnectType == "serial":
+            import serial
+            self.pm = serial.Serial(port=self.SerialPort,
+                                    baudrate=self.Baudrate,
+                                    bytesize=8,
+                                    stopbits=1,
+                                    timeout=0.1)
+            
+
+        self.write("*VER")
+        self.debug_stream(self.read())
+        self.write('*PWC00800')
         self.set_state(DevState.ON)
         # PROTECTED REGION END #    //  GentecEOMaestro.init_devicey
+
+    def write(self, cmd):
+        if self.ConnectType == "net":
+            self.pm.send(cmd.encode())
+        else:
+            self.pm.write(cmd.encode())
+
+    def read(self):
+        if self.ConnectType == "net":
+            return self.pm.recv(1024)
+        else:
+            return self.pm.readline()
 
     def always_executed_hook(self):
         """Method always executed before any TANGO command is executed."""
@@ -201,7 +254,10 @@ class GentecEOMaestro(Device):
         destructor and by the device Init command.
         """
         # PROTECTED REGION ID(GentecEOMaestro.delete_device) ENABLED START #
-        self.pm.close()
+        try:
+            self.pm.close()
+        except:
+            pass
         # PROTECTED REGION END #    //  GentecEOMaestro.delete_device
     # ------------------
     # Attributes methods
@@ -211,7 +267,7 @@ class GentecEOMaestro(Device):
         # PROTECTED REGION ID(GentecEOMaestro.range_read) ENABLED START #
         """Return the range attribute."""
         self.debug_stream('in RANGE')
-        a = self.send_query('*GCR').replace(b'Range: ', b'')
+        a = self.send_query('*GCR')
         self.debug_stream(a)
         self._range = Range(int(a))
         self.debug_stream(str(self._range))
@@ -221,33 +277,33 @@ class GentecEOMaestro(Device):
     def write_range(self, value):
         # PROTECTED REGION ID(GentecEOMaestro.range_write) ENABLED START #
         """Set the range attribute."""
-        temp = str(value).encode()
+        temp = str(value)
         if int(value) < 10:
-            temp += b'0'
-        self.pm.write(b'*SCS'+temp)
+            temp += '0'
+        self.write('*SCS'+temp)
         # PROTECTED REGION END #    //  GentecEOMaestro.range_write
 
     def read_auto_range(self):
         # PROTECTED REGION ID(GentecEOMaestro.auto_range_read) ENABLED START #
         """Return the auto_range attribute."""
-        return bool(int(self.send_query('*GAS').replace(b'AutoScale: ', b'')))
+        return bool(int(self.send_query('*GAS')))
         # PROTECTED REGION END #    //  GentecEOMaestro.auto_range_read
 
     def write_auto_range(self, value):
         # PROTECTED REGION ID(GentecEOMaestro.auto_range_write) ENABLED START #
-        self.pm.write(b'*SAS'+str(int(value)).encode())
+        self.write('*SAS'+str(int(value)))
         # PROTECTED REGION END #    //  GentecEOMaestro.auto_range_write
 
     def read_trigger_level(self):
         # PROTECTED REGION ID(GentecEOMaestro.trigger_level_read) ENABLED START #
         """Return the trigger_level attribute."""
-        return float(self.send_query(b'*GTL').replace(b'Trigger Level: ', b''))
+        return float(self.send_query('*GTL'))
         # PROTECTED REGION END #    //  GentecEOMaestro.trigger_level_read
 
     def write_trigger_level(self, value):
         # PROTECTED REGION ID(GentecEOMaestro.trigger_level_write) ENABLED START #
         """Set the trigger_level attribute."""
-        self.pm.write(b'*STL'+str(value).encode())
+        self.write('*STL'+str(value).encode())
         # PROTECTED REGION END #    //  GentecEOMaestro.trigger_level_write
 
     def read_wave_corr(self):
@@ -260,32 +316,30 @@ class GentecEOMaestro(Device):
         # PROTECTED REGION ID(GentecEOMaestro.wave_corr_write) ENABLED START #
         """Set the wave_corr attribute."""
         if not value:
-            self.pm.write(b'*PWC00000')
+            self.write('*PWC00000')
         self._wave_corr = value
         # PROTECTED REGION END #    //  GentecEOMaestro.wave_corr_write
 
     def read_wave_corr_value(self):
         # PROTECTED REGION ID(GentecEOMaestro.wave_corr_value_read) ENABLED START #
         """Return the wave_corr_value attribute."""
-        return int(self.send_query(b'*GWL').replace(b'PWC:', b''))
+        return int(self.send_query('*GWL'))
         # PROTECTED REGION END #    //  GentecEOMaestro.wave_corr_value_read
 
     def write_wave_corr_value(self, value):
         # PROTECTED REGION ID(GentecEOMaestro.wave_corr_value_write) ENABLED START #
         """Set the wave_corr_value attribute."""
-        value = str(value)
-        value = '0'*(5-len(value))+value
-        self.pm.write(b'*PWC'+value.encode())
+        self.write('*PWC{:05d}'.format(int(value)))
         # PROTECTED REGION END #    //  GentecEOMaestro.wave_corr_value_write
 
     def read_meter_value(self):
         # PROTECTED REGION ID(GentecEOMaestro.meter_value_read) ENABLED START #
         """Return the meter_value attribute."""
-        mode = self.send_query('*GMD').replace(b'Mode: ', b'')
-        change_prop = self.meter_value.get_properties()
-        if unit_lib[mode] != change_prop.unit:
-            change_prop.unit = unit_lib[mode]
-            self.meter_value.set_properties(change_prop)
+        # mode = self.send_query('*GMD')
+        # change_prop = self.meter_value.get_properties()
+        # if unit_lib[mode] != change_prop.unit:
+        #     change_prop.unit = unit_lib[mode]
+        #     self.meter_value.set_properties(change_prop)
         return float(self.send_query('*CVU'))
         # PROTECTED REGION END #    //  GentecEOMaestro.meter_value_read
 
